@@ -58,7 +58,9 @@ for IOS_TARGET_PLATFORM in armv7s arm64 x86_64; do
         -G Xcode \
         -DCMAKE_TOOLCHAIN_FILE=${CMAKE_IOS_DIR}/ios.toolchain.cmake \
         -DPLATFORM=$CMAKE_PLATFORM_NAME \
-        -DCMAKE_INSTALL_PREFIX=${IOS_LIB_ROOT}/${IOS_TARGET_PLATFORM}
+        -DCMAKE_INSTALL_PREFIX=${IOS_LIB_ROOT}/${IOS_TARGET_PLATFORM} \
+        -DBUILD_EXAMPLES=OFF \
+        -DBUILD_TESTING=OFF
 
     if [ $? -ne 0 ]; then
         echo "Error executing cmake"
