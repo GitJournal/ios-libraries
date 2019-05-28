@@ -20,7 +20,7 @@ cd $LIBSSH2_FULL_VERSION
 LIBSSH2_FULL_PATH=$(pwd)
 patch -p0 <../ssh2_builtin_engines.patch
 
-IOS_LIB_ROOT=$(pwd)/libs/libssh2
+IOS_LIB_ROOT=$(pwd)/../libs/libssh2
 rm -rf "${IOS_LIB_ROOT:?}/*"
 
 for IOS_TARGET_PLATFORM in armv7s arm64 x86_64; do
