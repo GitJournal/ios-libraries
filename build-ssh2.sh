@@ -23,9 +23,24 @@ patch -p0 <../ssh2_builtin_engines.patch
 IOS_LIB_ROOT=$(pwd)/libs/libssh2
 rm -rf "${IOS_LIB_ROOT:?}/*"
 
-#for IOS_TARGET_PLATFORM in armv7s arm64 x86_64; do
-for IOS_TARGET_PLATFORM in armv7s; do
+for IOS_TARGET_PLATFORM in armv7s arm64 x86_64; do
     echo "Building libssh2 for ${IOS_TARGET_PLATFORM}"
+    case "${IOS_TARGET_PLATFORM}" in
+    armv7s)
+        CMAKE_PLATFORM_NAME="OS"
+        ;;
+    arm64)
+        CMAKE_PLATFORM_NAME="OS64"
+        ;;
+    x86_64)
+        CMAKE_PLATFORM_NAME="SIMULATOR_TVOS"
+        ;;
+    *)
+        echo "Unsupported build platform:${IOS_TARGET_PLATFORM}"
+        exit 1
+        ;;
+    esac
+
     mkdir -p "${IOS_TARGET_PLATFORM}/${IOS_TARGET_PLATFORM}"
 
     export OPENSSL_ROOT_DIR=${OPENSSL_BASE_DIR}/${IOS_TARGET_PLATFORM}/
@@ -34,8 +49,6 @@ for IOS_TARGET_PLATFORM in armv7s; do
     rm -rf "build-${IOS_TARGET_PLATFORM}"
     mkdir "build-${IOS_TARGET_PLATFORM}"
     cd "build-${IOS_TARGET_PLATFORM}"
-
-    CMAKE_PLATFORM_NAME="OS"
 
     cmake ../ \
         -DOPENSSL_ROOT_DIR=${OPENSSL_ROOT_DIR} \
