@@ -22,14 +22,11 @@ LIBGIT2_FULL_PATH=$(pwd)
 IOS_LIB_ROOT=$(pwd)/../libs/libgit2
 rm -rf "${IOS_LIB_ROOT:?}/*"
 
-for IOS_TARGET_PLATFORM in armv7s arm64 x86_64; do
+for IOS_TARGET_PLATFORM in arm x86_64; do
     echo "Building libgit2 for ${IOS_TARGET_PLATFORM}"
     case "${IOS_TARGET_PLATFORM}" in
-    armv7s)
+    arm)
         CMAKE_PLATFORM_NAME="OS"
-        ;;
-    arm64)
-        CMAKE_PLATFORM_NAME="OS64"
         ;;
     x86_64)
         CMAKE_PLATFORM_NAME="SIMULATOR_TVOS"
